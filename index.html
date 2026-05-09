@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EV Dealer Quote</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">EV</div>
+          <div>
+            <strong>經銷商報價系統</strong>
+            <span>車輛與零件批發零售</span>
+          </div>
+        </div>
+
+        <nav class="category-list" aria-label="產品類別">
+          <button class="category active" data-category="all">全部商品</button>
+          <button class="category" data-category="vehicle">電動車輛</button>
+          <button class="category" data-category="battery">電池系統</button>
+          <button class="category" data-category="parts">維修零件</button>
+          <button class="category" data-category="accessory">配件精品</button>
+        </nav>
+
+        <div class="dealer-tier">
+          <label for="tier">經銷商等級</label>
+          <select id="tier">
+            <option value="0.9">A 級經銷商 9 折</option>
+            <option value="0.94">B 級經銷商 94 折</option>
+            <option value="0.97">C 級經銷商 97 折</option>
+            <option value="1">一般報價</option>
+          </select>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Dealer Quotation</p>
+            <h1>快速建立車輛與零件報價單</h1>
+          </div>
+          <div class="top-actions">
+            <button id="clearQuote" class="ghost-button" type="button">清空</button>
+            <button id="printQuote" class="primary-button" type="button">列印報價單</button>
+          </div>
+        </header>
+
+        <section class="dealer-panel" aria-label="經銷商資料">
+          <label>
+            經銷商
+            <input id="dealerName" type="text" value="宏達綠能車業" />
+          </label>
+          <label>
+            聯絡人
+            <input id="contactName" type="text" value="王先生" />
+          </label>
+          <label>
+            報價單號
+            <input id="quoteNo" type="text" />
+          </label>
+          <label>
+            交貨方式
+            <select id="delivery">
+              <option>到店自取</option>
+              <option>物流配送</option>
+              <option>總倉直送</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="content-grid">
+          <div class="catalog">
+            <div class="section-title">
+              <h2>產品目錄</h2>
+              <input id="search" type="search" placeholder="搜尋車款、零件、規格" />
+            </div>
+            <div id="productGrid" class="product-grid" aria-live="polite"></div>
+          </div>
+
+          <aside class="quote-panel" aria-label="下單專區">
+            <div class="quote-header">
+              <div>
+                <p class="eyebrow">Order Area</p>
+                <h2>下單專區</h2>
+              </div>
+              <span id="itemCount">0 項</span>
+            </div>
+
+            <div id="quoteItems" class="quote-items">
+              <p class="empty-state">從產品目錄加入車輛或零件後，這裡會自動整理報價內容。</p>
+            </div>
+
+            <div class="note-box">
+              <label for="quoteNote">備註</label>
+              <textarea id="quoteNote" rows="3" placeholder="例如：含安裝、需分批出貨、保固條件..."></textarea>
+            </div>
+
+            <dl class="totals">
+              <div>
+                <dt>小計</dt>
+                <dd id="subtotal">$0</dd>
+              </div>
+              <div>
+                <dt>經銷折扣</dt>
+                <dd id="discount">$0</dd>
+              </div>
+              <div>
+                <dt>營業稅 5%</dt>
+                <dd id="tax">$0</dd>
+              </div>
+              <div class="grand-total">
+                <dt>報價總額</dt>
+                <dd id="grandTotal">$0</dd>
+              </div>
+            </dl>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <template id="productCardTemplate">
+      <article class="product-card">
+        <div class="product-visual"></div>
+        <div class="product-body">
+          <div>
+            <span class="product-tag"></span>
+            <h3></h3>
+            <p></p>
+          </div>
+          <div class="product-meta">
+            <strong></strong>
+            <button type="button">加入</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

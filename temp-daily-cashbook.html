@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>每日記帳結算</title>
+    <link rel="stylesheet" href="temp-daily-cashbook.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Daily Cash Book</p>
+          <h1>每日記帳結算</h1>
+        </div>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="設定">
+          <span aria-hidden="true">⚙</span>
+        </button>
+      </header>
+
+      <section class="setup-panel" id="setupPanel" hidden>
+        <label>
+          Google Apps Script 網址
+          <input id="scriptUrl" type="url" placeholder="貼上部署後的 Web App URL" />
+        </label>
+        <button class="secondary-button" id="saveSettings" type="button">儲存設定</button>
+      </section>
+
+      <section class="summary-band" aria-label="今日統計">
+        <article>
+          <span>今日營業額</span>
+          <strong id="salesTotal">$0</strong>
+        </article>
+        <article>
+          <span>今日支出</span>
+          <strong id="expenseTotal">$0</strong>
+        </article>
+        <article>
+          <span>今日現金</span>
+          <strong id="cashTotal">$0</strong>
+        </article>
+      </section>
+
+      <section class="work-area">
+        <form class="entry-form" id="entryForm">
+          <h2>新增明細</h2>
+          <label>
+            日期
+            <input id="entryDate" name="date" type="date" required />
+          </label>
+          <label>
+            品項
+            <input id="itemName" name="item" type="text" placeholder="例如：維修收入、零件採購" required />
+          </label>
+          <label>
+            金額
+            <input id="amount" name="amount" type="number" min="0" step="1" placeholder="0" required />
+          </label>
+          <fieldset>
+            <legend>類型</legend>
+            <label class="radio-row">
+              <input type="radio" name="type" value="income" checked />
+              營業收入
+            </label>
+            <label class="radio-row">
+              <input type="radio" name="type" value="expense" />
+              支出
+            </label>
+          </fieldset>
+          <div class="button-row">
+            <button class="primary-button" type="submit">新增並送到 Sheets</button>
+            <button class="secondary-button" id="clearLocal" type="button">清空本機暫存</button>
+          </div>
+          <p class="hint" id="statusText">資料會先留在本機畫面，也會送到 Google Sheets。</p>
+        </form>
+
+        <section class="records-panel" aria-labelledby="recordsTitle">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Today</p>
+              <h2 id="recordsTitle">今日明細</h2>
+            </div>
+            <button class="primary-button" id="closeDay" type="button">今日結算並傳 LINE</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>品項</th>
+                  <th>金額</th>
+                  <th>支出</th>
+                </tr>
+              </thead>
+              <tbody id="recordsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <iframe class="submit-frame" name="sheetSubmitFrame" title="資料送出狀態"></iframe>
+    <form id="sheetSubmitForm" method="post" target="sheetSubmitFrame"></form>
+    <script src="temp-daily-cashbook.js"></script>
+  </body>
+</html>
